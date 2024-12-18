@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/bin/nixie_clock_ada.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "Nixie_Clock_Ada",
+            "interface": "swd",
+            "servertype": "openocd",
+            "svdFile": "${workspaceFolder}/share/STM32L151.svd",
+            "configFiles": [
+                "${workspaceRoot}/share/openocd.cfg"
+            ]
+        }
+    ]
+}
+
