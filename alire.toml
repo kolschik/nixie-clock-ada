@@ -1,0 +1,24 @@
+name = "nixie_clock_ada"
+description = ""
+version = "0.1.0-dev"
+
+authors = ["Your Name"]
+maintainers = ["Your Name <example@example.com>"]
+maintainers-logins = ["github-username"]
+licenses = "MIT OR Apache-2.0 WITH LLVM-exception"
+website = ""
+tags = []
+
+executables = ["nixie_clock_ada"]
+
+[configuration]
+generate_ada = false
+generate_c = false
+generate_gpr = true
+
+[[actions]]
+type = "post-build"
+command = ["arm-eabi-objcopy", "-O", "binary", "bin/nixie_clock_ada.elf", "bin/nixie_clock_ada.bin"]
+
+[[depends-on]]
+gnat_arm_elf = "^14.2.1"

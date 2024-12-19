@@ -1,0 +1,56 @@
+with "config/nixie_clock_ada_config.gpr";
+project Nixie_Clock_Ada is
+
+   for Languages use ("Ada", "ASM_CPP");
+
+   for Source_Dirs use ("src/", "config/", "src/svd/");
+   for Object_Dir use "obj/" & Nixie_Clock_Ada_Config.Build_Profile;
+   for Create_Missing_Dirs use "True";
+   for Exec_Dir use "bin";
+   for Main use ("nixie_clock_ada.adb");
+
+   for Target use "arm-elf";
+   for Runtime ("Ada") use "light-cortex-m3";
+
+   package Builder is
+      for Executable ("nixie_clock_ada.adb") use Project'Name & ".elf";
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use Nixie_Clock_Ada_Config.Ada_Compiler_Switches;
+   end Compiler;
+
+   package Binder is
+      for Switches ("Ada") use ("-Es"); --  Symbolic traceback
+   end Binder;
+
+   package Install is
+      for Artifacts (".") use ("share");
+   end Install;
+
+   package Linker is
+      for Switches ("Ada") use ("-T", Project'Project_Dir & "/src/link.ld",
+                                "-Wl,--print-memory-usage",
+                                "-Wl,--gc-sections");
+   end Linker;
+
+   package Device_Configuration is
+      for CPU_Name use "cortex-m3";
+      for Float_Handling use "soft";
+
+      for Number_Of_Interrupts use "45";
+
+      for Memories use ("RAM", "FLASH");
+
+      for Boot_Memory use "FLASH";
+
+      for Mem_Kind ("RAM") use "ram";
+      for Address ("RAM") use "0x20000000";
+      for Size ("RAM") use "0x8000";
+
+      for Mem_Kind ("FLASH") use "rom";
+      for Address ("FLASH") use "0x08000000";
+      for Size ("FLASH") use "0x10000";
+   end Device_Configuration;
+
+end Nixie_Clock_Ada;

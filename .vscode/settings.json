@@ -1,0 +1,5 @@
+{
+    "cortex-debug.openocdPath.windows": "c:/dev/openocd/bin/openocd.exe",
+    "cortex-debug.openocdPath.linux": "/usr/local/bin/openocd",
+    "cortex-debug.variableUseNaturalFormat": true
+}
